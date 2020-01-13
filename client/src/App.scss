@@ -1,0 +1,28 @@
+@import "./styles/main.scss";
+
+.App {
+  padding: 75px 0 75px;
+  text-align: center;
+  h1 {
+    font-size: 40px;
+    font-weight: 200;
+  }
+}
+
+.app-posts-container {
+  display: flex;
+  flex-flow: row wrap;
+
+  &__item {
+    flex: 0 0 50%;
+    padding: 15px;
+    .profile {
+      flex: 0 0 100%;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.profile-spinner {
+  margin: 100px 25px 100px;
+}

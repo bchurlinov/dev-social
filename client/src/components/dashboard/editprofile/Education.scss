@@ -1,0 +1,63 @@
+@import "../../../styles/main.scss";
+
+.add-education-form {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+
+  &__group {
+    flex: 0 0 50%;
+    padding: 15px;
+
+    &:nth-child(5) {
+      flex: 0 0 40%;
+    }
+
+    &:nth-child(6) {
+      flex: 0 0 40%;
+    }
+
+    &:nth-child(7) {
+      flex: 0 0 20%;
+      position: relative;
+      top: 30px;
+      .ant-checkbox-wrapper {
+        position: relative;
+        left: 5px;
+      }
+    }
+
+    &:nth-child(8) {
+      flex: 0 0 100%;
+      text-align: center;
+      button {
+        height: 40px;
+        margin-top: 20px;
+      }
+    }
+
+    .ant-calendar-picker {
+      width: 100% !important;
+    }
+
+    label {
+      font-style: italic;
+      color: $text-color;
+      font-size: 12px;
+    }
+
+    .ant-select-selection--single, .ant-select-selection--multiple {
+      min-height: 40px !important;
+      padding-bottom: 10px!important;
+    }
+
+    .ant-select-selection__rendered {
+      top: 3px;
+    }
+
+    input {
+      height: 40px;
+      width: 100%;
+    }
+  }
+}

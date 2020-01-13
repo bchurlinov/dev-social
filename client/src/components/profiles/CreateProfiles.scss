@@ -1,0 +1,60 @@
+@import "../../styles/main.scss";
+
+.create-profile-wrap {
+  padding: 50px 0 50px;
+
+  h2 {
+    color: $blue-color;
+    font-weight: 300;
+    margin-bottom: 5px;
+  }
+
+  h3 {
+    color: $text-color;
+    font-size: 17px;
+    font-weight: 300;
+    margin-bottom: 30px;
+
+    i {
+      margin-right: 10px;
+      font-size: 20px;
+      color: $blue-color;
+    }
+  }
+
+}
+
+
+.create-profile-form {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+
+  .form-group {
+    flex: 0 0 50%;
+    padding: 20px;
+    margin-bottom: 0;
+
+    &:nth-child(5), &:nth-child(6) {
+      flex: 0 0 100%;
+    }
+
+    label {
+      font-style: italic;
+      color: $text-color;
+      font-size: 12px;
+    }
+
+    input, button {
+      min-height: 40px;
+    }
+
+    .ant-select-selection--single, .ant-select-selection--multiple {
+      min-height: 40px !important;
+    }
+
+    .ant-select-selection__rendered {
+      top: 3px;
+    }
+  }
+}

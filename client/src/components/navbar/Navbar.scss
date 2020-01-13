@@ -1,0 +1,68 @@
+@import "../../styles/main.scss";
+
+nav {
+  height: 60px;
+  padding: 10px;
+  border-bottom: 1px solid #a8a8a8;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(24, 144, 255, 1) 0%, rgba(24, 168, 255, 1) 32%, rgba(0, 212, 255, 1) 100%);
+  -webkit-box-shadow: -1px 13px 14px -10px rgba(150,150,150,1);
+  -moz-box-shadow: -1px 13px 14px -10px rgba(150,150,150,1);
+  box-shadow: -1px 13px 14px -10px rgba(150,150,150,1);
+
+  div {
+    &:nth-child(1){
+      float: left;
+      margin-left: 20px;
+      span {
+        color: white;
+        font-size: 20px;
+      }
+      i {
+        color: white;
+        font-size: 30px;
+        position: relative;
+        margin-right: 7px;
+        top: 2px;
+      }
+    }
+
+    &:nth-child(2) {
+      float: right;
+      margin-top: 8px;
+      ul {
+        li {
+          display: inline;
+          color: white;
+          font-size: 15px;
+          margin-right: 20px;
+          a {
+            color: white;
+          }
+          &:nth-child(5){
+            i {
+              font-size: 15px;
+              margin-right: 8px;
+            }
+          }
+          &:nth-child(6) {
+            background: white;
+            color: $blue-color;
+            padding: 5px 10px;
+            @include border-radius(4px);
+            position: relative;
+            top: 1px;
+            cursor: pointer;
+            &:hover {
+
+            }
+            i {
+              font-size: 15px;
+              margin-right: 8px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

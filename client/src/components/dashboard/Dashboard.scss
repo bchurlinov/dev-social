@@ -1,0 +1,72 @@
+@import "../../styles/main.scss";
+
+#dashboard {
+  padding: 75px 0 75px;
+}
+
+.delete-account {
+  color: indianred !important;
+  font-weight: bold;
+}
+
+.delete-account-modal {
+  h4 {
+    margin-bottom: 0;
+    text-align: center;
+    i {
+      font-size: 20px;
+      margin-right: 10px;
+      color: indianred;
+    }
+  }
+
+  p {
+    text-align: center;
+    margin-bottom: 0;
+  }
+}
+
+.dashboard-header {
+  padding: 25px 0 25px;
+
+  h2 {
+    font-size: 25px;
+    font-weight: 200;
+    float: left;
+
+    i {
+      color: $blue-color;
+      margin-right: 7px;
+      font-size: 22px;
+    }
+  }
+
+  h4 {
+    font-size: 15px;
+    font-weight: 300;
+    float: right;
+
+    b {
+      font-style: italic;
+      text-decoration: underline;
+    }
+
+    i {
+      color: $blue-color;
+      margin-right: 7px;
+      font-size: 20px;
+    }
+  }
+}
+
+.dashboard-edit-profile {
+  padding: 30px 0 30px;
+  h3 {
+    font-size: 21px;
+    font-weight: 200;
+    i {
+      color: $blue-color;
+      margin-right: 5px;
+    }
+  }
+}

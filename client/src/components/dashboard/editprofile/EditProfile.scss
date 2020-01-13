@@ -1,0 +1,53 @@
+@import "../../../styles/main.scss";
+
+.edit-user-form {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+
+  &__group {
+    flex: 0 0 50%;
+    padding: 15px;
+
+    &:nth-child(5) {
+      flex: 0 0 100%;
+    }
+
+    &:last-of-type {
+      flex: 0 0 100%;
+      text-align: center;
+      button {
+        height: 40px;
+        margin-top: 25px;
+      }
+    }
+
+
+    label {
+      font-style: italic;
+      color: $text-color;
+      font-size: 12px;
+      margin: 5px 5px;
+      display: inline-block;
+
+      i {
+        font-size: 15px;
+        color: $blue-color;
+        margin-right: 5px;
+      }
+    }
+
+    .ant-select-selection--single, .ant-select-selection--multiple {
+      min-height: 40px !important;
+      padding-bottom: 10px!important;
+    }
+
+    .ant-select-selection__rendered {
+      top: 3px;
+    }
+
+    input {
+      height: 40px;
+    }
+  }
+}

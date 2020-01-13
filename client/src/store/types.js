@@ -1,0 +1,29 @@
+/* Authentication */
+export const LOGIN_USER = "LOGIN_USER";
+export const REGISTER_USER = "REGISER_USER";
+export const AUTH_LOADER = "AUTH_LOADER";
+export const CLEAR_AUTH = "CLEAR_AUTH";
+export const AUTH_ERROR_MESSAGE = "AUTH_ERROR_MESSAGE";
+export const AUTO_USER_AUTO = "AUTO_USER_AUTO";
+export const LOAD_USER = "LOAD_USER";
+export const CREATE_PROFILE = "CREATE_PROFILE";
+export const LOG_OUT = "LOG_OUT";
+export const DELETE_USER_ACCOUNT = "DELETE_USER_ACCOUNT";
+
+/* Profiles */
+export const LOAD_PROFILES = "LOAD_PROFILES";
+export const GET_MY_PROFILE = "GET_MY_PROFILE";
+export const GET_SINGLE_PROFILE = "GET_SINGLE_PROFILE";
+export const EDIT_PROFILE = "EDIT_PROFILE";
+export const CLEAR_PROFILE = "CLEAR_PROFILE";
+export const PROFILE_UPDATED = "PROFILE_UPDATED";
+export const PROFILE_LOADER = "PROFILE_LOADER";
+export const EDIT_EDUCATION = "EDIT_EDUCATION";
+export const EDUCATION_LOADER = "EDUCATION_LOADER";
+export const DELETE_EDUCATION = "DELETE_EDUCATION";
+export const ADD_EXPERIENCE = "ADD_EXPERIENCE";
+export const EXPERIENCE_LOADER = "EDUCATION_LOADER";
+export const DELETE_EXPERIENCE = "DELETE_EXPERIENCE";
+
+/* Posts */
+export const LOAD_POSTS = "LOAD_POSTS";

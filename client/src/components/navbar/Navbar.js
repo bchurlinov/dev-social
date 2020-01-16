@@ -13,7 +13,7 @@ const Navbar = ({logOut, isAuthenticated}) => {
 
     return (
         <>
-            { isAuthenticated ?
+            {isAuthenticated ?
                 <nav>
                     <div>
                         <Link to="/">
@@ -34,8 +34,11 @@ const Navbar = ({logOut, isAuthenticated}) => {
                                     Developers
                                 </Link>
                             </li>
-                            <li>Posts</li>
-                            <li> |</li>
+                            <li>
+                                <Link to="/posts">
+                                    Posts
+                                </Link></li>
+                            <li> | </li>
                             <li>
                                 <Icon type="setting"/>
                                 <Link to="/dashboard">Settings</Link>
@@ -48,7 +51,7 @@ const Navbar = ({logOut, isAuthenticated}) => {
                     </div>
                     <div className="clearfix">{""}</div>
                 </nav>
-            : null
+                : null
             }
         </>
     );

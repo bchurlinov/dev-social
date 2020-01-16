@@ -1,17 +1,19 @@
 import React, {useEffect} from 'react';
+import {Link} from "react-router-dom";
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {loadUser} from "./store/actions/authActions";
-import {loadPosts} from "./store/actions/postActions";
+import {loadPosts, likePost, unlikePost, deletePost} from "./store/actions/postActions";
 import {requestInterceptor} from "./utilities/LocalStorageService";
 import {loadProfiles} from "./store/actions/profileActions";
 import ProfileCard from "./components/profiles/ProfileCard";
 import PostCard from "./components/posts/PostCard";
+import {renderProfileSpinner} from "./utilities/config";
+import {Button} from "antd";
 import _ from "lodash";
-import {Spin} from "antd";
 import "./App.scss";
 
-const App = ({loadUser, loadPosts, userData, loadProfiles, profiles}) => {
+const App = ({loadUser, loadPosts, userData, loadProfiles, profiles, posts, likePost, unlikePost, deletePost}) => {
 
     useEffect(() => {
 
@@ -20,22 +22,63 @@ const App = ({loadUser, loadPosts, userData, loadProfiles, profiles}) => {
             requestInterceptor(token);
             loadUser();
             loadProfiles();
-            loadPosts();
+            loadPosts(4);
         }
     }, []);
 
+    const addLikeToPost = postId => {
+        likePost(postId);
+    };
+
+    const unlikeAPost = postId => {
+        unlikePost(postId)
+    };
+
+    const deleteAPost = postId => {
+        deletePost(postId)
+    };
+
     const renderProfiles = () => {
-        return _.map(profiles, (item, index) => {
+        return _.map(profiles.slice(0, 3), (item, index) => {
             return <ProfileCard key={index} profile={item}/>
         })
     };
 
-    const renderProfileSpinner = () => {
-        return (
-            <div className="profile-spinner">
-                <Spin size="large"/>
-            </div>
-        )
+    const renderPosts = () => {
+        if (posts.length !== 0) {
+            return _.map(posts.slice(0, 4), (item, index) => {
+                return <PostCard
+                    key={index}
+                    posts={item}
+                    user={userData}
+                    like={(id) => addLikeToPost(id)}
+                    unlike={(id) => unlikeAPost(id)}
+                    deletepost={(id) => deleteAPost(id)}
+                    single={false}
+                />
+            });
+        } else {
+            return renderProfileSpinner();
+        }
+    };
+
+    const renderProfilesLink = () => {
+        return profiles.length !== 0 && (
+            <Button type="default">
+                <Link to="/developers">
+                    Find Developers
+                </Link>
+            </Button>)
+    };
+
+    const renderPostsLink = () => {
+      return posts.length !== 0 && (
+          <Button type="default">
+              <Link to="/posts">
+                  Find Topics
+              </Link>
+          </Button>
+      )
     };
 
     if (!userData.profile) {
@@ -45,18 +88,25 @@ const App = ({loadUser, loadPosts, userData, loadProfiles, profiles}) => {
     return (
         <>
             <div className="App container">
-                <h1>Latest Profiles</h1>
                 <div className="app-posts-container">
                     <div className="app-posts-container__item">
+                        <h3>Latest profiles</h3>
                         {profiles.length !== 0 ?
                             renderProfiles()
                             :
                             renderProfileSpinner()
                         }
+                        <div className="text-center">
+                            {renderProfilesLink()}
+                        </div>
                     </div>
 
                     <div className="app-posts-container__item">
-                        <PostCard/>
+                        <h3>Latest topics</h3>
+                        {renderPosts()}
+                        <div className="text-center">
+                            {renderPostsLink()}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,8 +118,16 @@ const App = ({loadUser, loadPosts, userData, loadProfiles, profiles}) => {
 const mapStateToProps = state => {
     return {
         userData: state.auth.user,
-        profiles: state.profile.profiles
+        profiles: state.profile.profiles,
+        posts: state.post.posts
     }
 };
 
-export default connect(mapStateToProps, {loadUser, loadProfiles, loadPosts})(App);
+export default connect(mapStateToProps, {
+    loadUser,
+    loadProfiles,
+    loadPosts,
+    likePost,
+    unlikePost,
+    deletePost
+})(App);

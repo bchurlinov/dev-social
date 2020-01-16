@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Post = require("../models/Post");
+const Profile = require("../models/Profile");
 const _ = require("lodash");
 
 // @route GET api/posts/
@@ -9,8 +10,35 @@ const _ = require("lodash");
 exports.getPosts = async (req, res) => {
     try {
 
-        const posts = await Post.find();
-        res.status(400).json(posts);
+        let query;
+        const requestLimit = req.query.limit;
+
+        if (req.query.limit) {
+            const countLength = await Post.find();
+            query = await Post.find().limit(JSON.parse(requestLimit));
+            res.status(200).json({data: query, count: countLength.length });
+        } else {
+            query = await Post.find();
+            res.status(200).json(query);
+        }
+
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+};
+
+exports.getSinglePost = async (req, res) => {
+    try {
+
+        const post = await Post.findOne({_id: req.params.postid});
+
+        if (!post) {
+            return res.status(404).json({message: "No post found"})
+        }
+
+        res.status(200).send(post);
 
     } catch (err) {
         console.error(err);
@@ -43,7 +71,7 @@ exports.posting = async (req, res) => {
     }
 };
 
-// @route DELETE api/posts
+// @route DELETE api/posts/delete/:postid
 // @desc DELETE a Post
 // @access Private
 
@@ -53,7 +81,7 @@ exports.deletePost = async (req, res) => {
 
         const post = await Post.findById(req.params.postid);
 
-        if(post.user.toString() !== req.user.id) {
+        if (post.user.toString() !== req.user.id) {
             res.status(401).json({message: "Not authorized"})
         }
 
@@ -104,7 +132,13 @@ exports.postLike = async (req, res) => {
     try {
 
         const post = await Post.findById(req.params.postid);
-        const user = await User.findById(req.user.id);
+        const user = await User.findById(req.user.id).select("-password");
+
+        const userLiked = {
+            user: user._id,
+            avatar: user.avatar,
+            name: user.name
+        };
 
         const allLikes = post.likes.map(post => {
             return post.user.toString();
@@ -115,7 +149,7 @@ exports.postLike = async (req, res) => {
             return res.status(400).json({message: "The post has already been liked !"})
         }
 
-        post.likes.unshift({user: req.user.id});
+        post.likes.unshift(userLiked);
         await post.save();
 
 

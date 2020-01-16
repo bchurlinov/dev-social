@@ -48,6 +48,7 @@ const Dashboard = ({isAuthenticated, loadUser, deleteUserAccount, getMyProfile, 
         return <Redirect to="/auth"/>
     }
 
+    console.log(profile);
     return (
         <div className="container">
             <div id="dashboard">

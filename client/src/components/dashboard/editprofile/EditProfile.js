@@ -85,12 +85,6 @@ const EditProfile = ({profile, editProfile, isLoading, successMessage, loadUser,
         return !!(inputs.website.match(/^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/gm) || profile.website.match(/^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/gm));
     };
 
-    // const checkSocialValidUrl = () => {
-    //     const matchReg = /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/gm;
-    //
-    //     return !!(inputs.facebook.match(matchReg) || inputs.github.match(matchReg) || inputs.linkedin.match(matchReg) || inputs.instagram.match(matchReg) || inputs.twitter.match(matchReg) || inputs.youtube.match(matchReg));
-    // };
-
     const checkLocation = () => {
         return inputs.location.length > 2 || inputs.location.length === 0
     };

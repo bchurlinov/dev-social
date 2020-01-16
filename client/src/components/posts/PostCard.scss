@@ -11,6 +11,7 @@
 
   &__user {
     flex: 0 0 20%;
+    text-align: center;
 
     img {
       width: 80px;
@@ -42,6 +43,17 @@
       font-size: 12px;
       color: $text-color;
     }
+
+    .discussion-count {
+     span {
+       display: inline-block;
+       margin-left: 3px;
+       padding: 0 4px;
+       color: $blue-color;
+       background: white;
+       @include border-radius(2px);
+     }
+    }
   }
 }
 
@@ -57,5 +69,29 @@
   button {
     display: inline-block;
     margin-right: 10px;
+  }
+}
+
+.like-button {
+  background: white !important;
+  border: 1px solid $blue-color !important;
+  span {
+    color: $blue-color !important;
+  }
+
+  i {
+    color: $blue-color !important;
+  }
+}
+
+.unlike-button {
+  background: $blue-color !important;
+  border: 1px solid $blue-color !important;
+  span {
+    color: white !important;
+  }
+
+  i {
+    color: white !important;
   }
 }

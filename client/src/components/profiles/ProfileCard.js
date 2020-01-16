@@ -27,12 +27,11 @@ const ProfileCard = ({profile}) => {
                 <div className="profile-wrap">
                     <div className="profile-header">
                         <img src={profile.user.avatar} alt="Avatar"/>
-                        <h3>{profile.user.name}</h3>
                     </div>
                     <div className="profile-information">
                         <div>
+                            <h3>{profile.user.name}</h3>
                             <h4>{getPosition()} Developer</h4>
-                            <h5>{profile.location}</h5>
                         </div>
 
                         <div>

@@ -8,6 +8,8 @@ import PrivateRoute from "./utilities/PrivateRoute";
 import NotFound from "./NotFound";
 import Dashboard from "./components/dashboard/Dashboard";
 import Developers from "./components/developers/Developers";
+import Posts from "./components/posts/Posts";
+import PostDetails from "./components/posts/PostDetails";
 import CreateProfile from "./components/profiles/CreateProfile";
 import Profile from "./components/profiles/Profile";
 import Navbar from "./components/navbar/Navbar";
@@ -42,6 +44,8 @@ class Root extends Component {
                     <PrivateRoute exact path="/" component={App}/>
                     <PrivateRoute exact path="/dashboard" component={Dashboard}/>
                     <PrivateRoute exact path="/developers" component={Developers}/>
+                    <PrivateRoute exact path="/posts" component={Posts}/>
+                    <PrivateRoute exact path="/posts/:id" component={PostDetails}/>
                     <PrivateRoute exact path="/profile/:id" component={Profile}/>
                     <PrivateRoute exact path="/create-profile" component={CreateProfile}/>
                     <PrivateRoute component={NotFound}/>

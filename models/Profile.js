@@ -106,6 +106,16 @@ const ProfileSchema = new Schema({
         type: Date,
         default: Date.now
     }
+}, {
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true}
+});
+
+ProfileSchema.virtual("topics", {
+    ref: "post",
+    localField: "user",
+    foreignField: "user",
+    justOne: false
 });
 
 module.exports = Profile = mongoose.model("profile", ProfileSchema);

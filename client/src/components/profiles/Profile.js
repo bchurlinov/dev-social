@@ -1,18 +1,50 @@
 import React, {useState, useEffect} from 'react';
+import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {deleteEducation, deleteExperience, getSingleProfile} from "../../store/actions/profileActions";
 import moment from "moment"
-import {url, getUserPosition} from "../../utilities/config";
-import {Icon, Button, message, Popconfirm} from "antd"
+import {getUserPosition} from "../../utilities/config";
+import {Icon, Button, message, Popconfirm, Modal} from "antd"
 import Loader from "../widgets/Loader";
 import _ from "lodash";
 import "./Profile.scss";
 
 const Profile = ({match, history, user, getSingleProfile, deleteExperience, deleteEducation, singleProfile, educationDeletedMessage, experienceDeleteMessage}) => {
 
+    const [modal, setModal] = useState({isVisible: false});
+
+    const toggleModal = () => {
+        setModal({
+            ...modal,
+            isVisible: !modal.isVisible
+        })
+    };
+
+    const renderTopics = () => {
+        return _.map(singleProfile, profile => {
+            return _.map(profile.topics, (topic, index) => {
+                return (
+                    <div key={index}>
+                        <Link to={`/posts/${topic._id}`}>
+                            <div className="modal-topic-wrap">
+                                <div>
+                                    <img src={topic.avatar} alt="avatar"/>
+                                    <p>{topic.name}</p>
+                                </div>
+                                <div>
+                                    <p>{topic.text}</p>
+                                    <span><b>Posted on</b>: {moment(topic.date).format("MMM-DDD-YYYY")}</span>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                )
+            })
+        })
+    };
 
     useEffect(() => {
-        if(experienceDeleteMessage) {
+        if (experienceDeleteMessage) {
             success(experienceDeleteMessage);
         }
     }, [experienceDeleteMessage]);
@@ -169,13 +201,18 @@ const Profile = ({match, history, user, getSingleProfile, deleteExperience, dele
                                 </div>
                             </div>
                             <div className="single-profile-header__lower">
-                                <h2>{item.name}</h2>
+                                <h2>{item.user.name}</h2>
                                 <h3>{getUserPosition(item.status)} Developer</h3>
                                 <h4>Macedonia, {item.location}</h4>
                                 <div className="social-medias">
                                     <ul>
                                         {renderSocial(item.social)}
                                     </ul>
+                                </div>
+                                <div>
+                                    <Button type="primary" onClick={toggleModal}>
+                                        {item.user.name}'s latest topics
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -240,6 +277,16 @@ const Profile = ({match, history, user, getSingleProfile, deleteExperience, dele
                 }
 
             </div>
+
+            <Modal
+                title={`${user.name}'s latest topics`}
+                visible={modal.isVisible}
+                onCancel={toggleModal}
+                footer={null}
+            >
+                {renderTopics()}
+
+            </Modal>
         </div>
     );
 };

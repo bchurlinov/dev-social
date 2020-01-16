@@ -1,6 +1,51 @@
 const Profile = require("../models/Profile");
+const Post = require("../models/Post");
 const _ = require("lodash");
 const moment = require("moment");
+
+// @route GET api/profile
+// @desc Get all profiles
+// @access Public
+
+exports.getAllProfiles = async (req, res) => {
+    try {
+        const popQuery = [{path: "user", select: "name avatar"}, {path: "topics"}];
+        const profiles = await Profile.find().populate(popQuery);
+        res.json(profiles);
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error")
+    }
+};
+
+// @route GET api/profile/user/:user_id
+// @desc GET ProfileCard by user id
+// @access Public
+
+exports.getUserProfile = async (req, res) => {
+    try {
+
+        const popQuery = [{path: "user", select: "name avatar"}, {path: "topics"}];
+        const userProfile = await Profile.find({user: req.params.user_id}).populate(popQuery);
+
+        if (!userProfile) {
+            res.status(400).json({msg: "There is no profile for this user"})
+        }
+
+        res.json(userProfile);
+
+    } catch (err) {
+        console.error(err.message);
+
+        if (err.kind === "ObjectId") {
+            return res.status(400).json({message: "There is no profile for this user"});
+        }
+
+        res.status(500).send("Server Error")
+    }
+};
+
 
 // @route GET api/profile/me
 // @desc GET current user profile
@@ -8,8 +53,7 @@ const moment = require("moment");
 
 exports.myProfile = async (req, res) => {
     try {
-
-        const profile = await Profile.findOne({user: req.user.id}).populate('user', ["name", "avatar"]);
+        const profile = await Profile.findOne({user: req.user.id}).populate("user");
         res.json(profile);
 
     } catch (err) {
@@ -238,50 +282,6 @@ exports.addExperience = async (req, res) => {
 //
 //     }
 // };
-
-// @route GET api/profile
-// @desc Get all profiles
-// @access Public
-
-exports.getAllProfiles = async (req, res) => {
-    try {
-
-        const profiles = await Profile.find().populate("user", ["name", "avatar"]);
-        res.json(profiles);
-
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error")
-    }
-};
-
-
-// @route GET api/profile/user/:user_id
-// @desc GET ProfileCard by user id
-// @access Public
-
-exports.getUserProfile = async (req, res) => {
-    try {
-
-        const userProfile = await Profile.find({user: req.params.user_id}).populate("user", ["name", "avatar"]);
-
-        if (!userProfile) {
-            res.status(400).json({msg: "There is no profile for this user"})
-        }
-
-        res.json(userProfile);
-
-    } catch (err) {
-        console.error(err.message);
-
-        if (err.kind === "ObjectId") {
-            return res.status(400).json({message: "There is no profile for this user"});
-        }
-
-        res.status(500).send("Server Error")
-    }
-};
-
 
 
 

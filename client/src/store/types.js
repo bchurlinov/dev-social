@@ -27,3 +27,5 @@ export const DELETE_EXPERIENCE = "DELETE_EXPERIENCE";
 
 /* Posts */
 export const LOAD_POSTS = "LOAD_POSTS";
+export const SINGLE_POST = "SINGLE_POST";
+export const POSTS_LOADER= "POST_LOADER";

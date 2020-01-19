@@ -82,6 +82,10 @@
     display: inline-block;
     margin-right: 10px;
 
+    span {
+      display: inline-block;
+    }
+
     @media(max-width: 600px) {
       &:last-of-type {
         margin-top: 15px;

@@ -13,6 +13,10 @@
     flex: 0 0 20%;
     text-align: center;
 
+    @media(max-width: 650px) {
+      flex: 0 0 100%;
+    }
+
     img {
       width: 80px;
       height: 80px;
@@ -31,6 +35,10 @@
   &__comment {
     flex: 0 0 80%;
     padding: 10px;
+
+    @media(max-width: 650px) {
+      flex: 0 0 100%;
+    }
 
     p {
       text-align: left;
@@ -61,6 +69,10 @@
   margin-top: 10px;
   text-align: left;
 
+  @media(max-width: 600px) {
+   text-align: center;
+  }
+
   span {
     color: white;
     font-weight: bold;
@@ -69,6 +81,13 @@
   button {
     display: inline-block;
     margin-right: 10px;
+
+    @media(max-width: 600px) {
+      &:last-of-type {
+        margin-top: 15px;
+      }
+    }
+
   }
 }
 

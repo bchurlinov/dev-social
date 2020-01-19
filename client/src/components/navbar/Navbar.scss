@@ -30,6 +30,10 @@ nav {
     &:nth-child(2) {
       float: right;
       margin-top: 8px;
+
+      @media(max-width: 700px) {
+        display: none;
+      }
       ul {
         li {
           display: inline;

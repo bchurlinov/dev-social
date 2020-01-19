@@ -203,7 +203,7 @@ const Profile = ({match, history, user, getSingleProfile, deleteExperience, dele
                             <div className="single-profile-header__lower">
                                 <h2>{item.user.name}</h2>
                                 <h3>{getUserPosition(item.status)} Developer</h3>
-                                <h4>Macedonia, {item.location}</h4>
+                                <h4>Macedonia, {_.startCase(_.toLower(item.location))}</h4>
                                 <div className="social-medias">
                                     <ul>
                                         {renderSocial(item.social)}

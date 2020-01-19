@@ -1,12 +1,20 @@
 import axios from "axios";
 import {url} from "../../utilities/config";
-import {LOAD_POSTS, SINGLE_POST, POSTS_LOADER} from "../types";
+import {
+    LOAD_POSTS,
+    SINGLE_POST,
+    POSTS_LOADER,
+    LOAD_MORE_LESS,
+    POST_DELETED_MESSAGE,
+    CLEAR_POSTS
+} from "../types";
 
-export const loadPosts = (limit) => {
+export const loadPosts = (limit = 4) => {
     return async (dispatch) => {
         dispatch({type: POSTS_LOADER});
         try {
             const posts = await axios.get(`${url}/posts?limit=${limit}`);
+
             dispatch({
                 type: LOAD_POSTS,
                 payload: posts.data.data,
@@ -16,6 +24,12 @@ export const loadPosts = (limit) => {
         } catch (err) {
             console.log(err.response);
         }
+    }
+};
+
+export const loadMoreLessAction = () => {
+    return (dispatch) => {
+        dispatch({type: LOAD_MORE_LESS});
     }
 };
 
@@ -48,13 +62,13 @@ export const getSinglePost = postId => {
     }
 };
 
-export const likePost = postId => {
+export const likePost = (postId, limit) => {
     return async (dispatch) => {
         try {
 
             const like = await axios.post(`${url}/posts/likes/${postId}`);
             dispatch(getSinglePost(postId));
-            dispatch(loadPosts());
+            dispatch(loadPosts(limit));
 
         } catch (err) {
             console.log(err);
@@ -62,12 +76,12 @@ export const likePost = postId => {
     }
 };
 
-export const unlikePost = postId => {
+export const unlikePost = (postId, limit) => {
     return async (dispatch) => {
         try {
 
             const unlike = await axios.post(`${url}/posts/unlikes/${postId}`);
-            dispatch(loadPosts());
+            dispatch(loadPosts(limit));
             dispatch(getSinglePost(postId));
 
         } catch (err) {
@@ -79,13 +93,34 @@ export const unlikePost = postId => {
 export const deletePost = postId => {
     return async (dispatch) => {
         try {
-
-            console.log(postId);
             const deletePost = await axios.delete(`${url}/posts/delete/${postId}`);
             dispatch(loadPosts());
+            dispatch({
+                type: POST_DELETED_MESSAGE
+            });
+
+            setTimeout(() => {
+                dispatch({
+                    type: CLEAR_POSTS
+                })
+            }, 1000);
 
         } catch (err) {
             console.log(err);
+        }
+    }
+};
+
+export const postComment = (postId, comment) => {
+    return async (dispatch) => {
+        try {
+
+            const addComment = await axios.post(`${url}/posts/comments/${postId}`, comment);
+            dispatch(getSinglePost(postId));
+
+            // Add post comment via redux success message
+        } catch (err) {
+            console.log(err)
         }
     }
 };

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from "react-redux";
-import {loadPosts, addPost, deletePost, unlikePost, likePost} from "../../store/actions/postActions";
+import {loadPosts, addPost, deletePost, unlikePost, likePost, loadMoreLessAction} from "../../store/actions/postActions";
 import PostCard from "./PostCard";
 import {renderProfileSpinner} from "../../utilities/config";
 import _ from "lodash";
@@ -9,7 +9,7 @@ import "./Posts.scss";
 
 const {TextArea} = Input;
 
-const Posts = ({posts, userData, addPost, likePost, unlikePost, deletePost, loadPosts, count, postsLoader}) => {
+const Posts = ({posts, userData, addPost, likePost, unlikePost, deletePost, loadPosts, count, loadMoreLessAction, loadMore, postDeletedMessage}) => {
 
     const [input, setInput] = useState({
         text: ""
@@ -20,6 +20,12 @@ const Posts = ({posts, userData, addPost, likePost, unlikePost, deletePost, load
     useEffect(() => {
         loadPosts(limit.amount)
     }, [limit]);
+
+    useEffect(() => {
+        if(postDeletedMessage) {
+            error(postDeletedMessage);
+        }
+    }, [postDeletedMessage]);
 
     const inputHandler = event => {
         setInput({
@@ -45,11 +51,11 @@ const Posts = ({posts, userData, addPost, likePost, unlikePost, deletePost, load
     };
 
     const addLikeToPost = postId => {
-        likePost(postId);
+        likePost(postId, limit.amount);
     };
 
     const unlikeAPost = postId => {
-        unlikePost(postId)
+        unlikePost(postId, limit.amount)
     };
 
     const deleteAPost = postId => {
@@ -88,14 +94,29 @@ const Posts = ({posts, userData, addPost, likePost, unlikePost, deletePost, load
             ...limit,
             amount: limit.amount + 4
         });
+
+        loadMoreLessAction();
+    };
+
+    const loadLessPosts = () => {
+        setLimit({
+            ...limit,
+            amount: limit.amount - 4
+        });
+
+        loadMoreLessAction();
     };
 
     const checkPostsLength = () => {
-       return posts.length === count ? "load-more-button" : ""
+        return posts.length === count ? "load-more-button" : ""
+    };
+
+    const showLessCount = () => {
+        return posts.length !== count ? "show-less-button" : ""
     };
 
     return (
-        <div className="post-container">
+        <div className="post-container animated fadeIn">
             <div className="container">
                 <div className="create-post">
                     <h2>Create a post</h2>
@@ -135,10 +156,21 @@ const Posts = ({posts, userData, addPost, likePost, unlikePost, deletePost, load
                         onClick={loadMorePosts}
                         style={{marginTop: "20px"}}
                         className={checkPostsLength()}
-                        loading={postsLoader}
-                        disabled={postsLoader}
+                        loading={loadMore}
+                        disabled={loadMore}
                     >
                         Load More Posts
+                    </Button>
+
+                    <Button
+                        type="default"
+                        onClick={loadLessPosts}
+                        style={{marginTop: "20px"}}
+                        className={showLessCount()}
+                        loading={loadMore}
+                        disabled={loadMore}
+                    >
+                        Load Less Posts
                     </Button>
                 </div>
             </div>
@@ -151,7 +183,9 @@ const mapStateToProps = state => {
         posts: state.post.posts,
         userData: state.auth.user,
         count: state.post.count,
-        postsLoader: state.post.postsLoader
+        postsLoader: state.post.postsLoader,
+        loadMore: state.post.loadMore,
+        postDeletedMessage: state.post.postDeletedMessage
     }
 };
 
@@ -160,5 +194,6 @@ export default connect(mapStateToProps, {
     addPost,
     deletePost,
     likePost,
-    unlikePost
+    unlikePost,
+    loadMoreLessAction
 })(Posts);

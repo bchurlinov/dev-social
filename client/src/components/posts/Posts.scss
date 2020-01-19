@@ -18,6 +18,10 @@
   .post {
     flex: 0 0 50%;
     padding: 15px;
+
+    @media(max-width: 991px) {
+      flex: 0 0 100%;
+    }
   }
 }
 
@@ -37,11 +41,23 @@
         flex: 0 0 10%;
         text-align: center;
         padding: 5px;
+        @media(max-width: 991px) {
+          flex: 0 0 20%;
+          padding: 10px;
+        }
 
         img {
           width: 85px;
           height: 85px;
           @include border-radius(50%);
+          @media(max-width: 991px) {
+            max-width: 75px;
+            height: 75px;
+          }
+
+          @media(max-width: 500px) {
+            width: 100%;
+          }
         }
 
         p {
@@ -52,6 +68,10 @@
 
       &:nth-child(2) {
         flex: 0 0 90%;
+        @media(max-width: 991px) {
+          flex: 0 0 80%;
+        }
+
       }
 
       &:nth-child(3) {
@@ -64,5 +84,9 @@
 }
 
 .load-more-button {
+  display: none;
+}
+
+.show-less-button {
   display: none;
 }

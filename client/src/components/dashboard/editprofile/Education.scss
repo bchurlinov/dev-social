@@ -9,27 +9,50 @@
     flex: 0 0 50%;
     padding: 15px;
 
+    @media(max-width: 767px) {
+      flex: 0 0 100%;
+    }
+
     &:nth-child(5) {
       flex: 0 0 40%;
+      @media(max-width: 767px) {
+        flex: 0 0 100%;
+      }
     }
 
     &:nth-child(6) {
       flex: 0 0 40%;
+      @media(max-width: 767px) {
+        flex: 0 0 100%;
+      }
     }
 
     &:nth-child(7) {
       flex: 0 0 20%;
       position: relative;
       top: 30px;
+
+      @media(max-width: 767px) {
+       top: 10px;
+      }
+
       .ant-checkbox-wrapper {
         position: relative;
         left: 5px;
+      }
+
+      @media(max-width: 767px) {
+        flex: 0 0 100%;
       }
     }
 
     &:nth-child(8) {
       flex: 0 0 100%;
       text-align: center;
+      @media(max-width: 767px) {
+        flex: 0 0 100%;
+      }
+
       button {
         height: 40px;
         margin-top: 20px;
@@ -48,7 +71,7 @@
 
     .ant-select-selection--single, .ant-select-selection--multiple {
       min-height: 40px !important;
-      padding-bottom: 10px!important;
+      padding-bottom: 10px !important;
     }
 
     .ant-select-selection__rendered {

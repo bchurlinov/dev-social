@@ -26,7 +26,7 @@ const PostCard = ({posts, user, like, unlike, deletepost, single}) => {
     };
 
     return (
-        <div className="post">
+        <div className="post animated fadeInUp">
             <div className="post-wrapper">
                 <div className="post-wrapper__user">
                     <img src={posts.avatar} alt="Avatar"/>

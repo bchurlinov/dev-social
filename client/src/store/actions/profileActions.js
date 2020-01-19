@@ -18,11 +18,14 @@ import {
 } from "../types";
 
 
-export const loadProfiles = () => {
+export const loadProfiles = (status = "", skills = "", location = "") => {
     return async (dispatch) => {
         try {
 
-            const profiles = await axios.get(`${url}/profile`);
+            console.log(status);
+            console.log(skills);
+            console.log(location);
+            const profiles = await axios.get(`${url}/profile?status=${status}&skills=${skills}&location=${location}`);
             dispatch({
                 type: LOAD_PROFILES,
                 payload: profiles.data

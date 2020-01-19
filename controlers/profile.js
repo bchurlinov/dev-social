@@ -9,9 +9,22 @@ const moment = require("moment");
 
 exports.getAllProfiles = async (req, res) => {
     try {
+
+        let requestQuery;
+        let requestParams = {...req.query};
+        let disabled = ["status", "skills", "location"];
+
+
+        _.map(disabled, (item) => {
+            if (!req.query[item]) {
+                requestQuery = delete requestParams[item]
+            }
+        });
+
         const popQuery = [{path: "user", select: "name avatar"}, {path: "topics"}];
-        const profiles = await Profile.find().populate(popQuery);
-        res.json(profiles);
+        requestQuery = await Profile.find(requestParams).populate(popQuery);
+
+        res.json(requestQuery);
 
     } catch (err) {
         console.error(err.message);

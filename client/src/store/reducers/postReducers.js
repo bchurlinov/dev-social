@@ -1,20 +1,30 @@
-import {LOAD_POSTS, SINGLE_POST, POSTS_LOADER} from "../types";
+import {
+    LOAD_POSTS,
+    SINGLE_POST,
+    POSTS_LOADER,
+    LOAD_MORE_LESS,
+    POST_DELETED_MESSAGE,
+    CLEAR_POSTS
+} from "../types";
 
 const initialState = {
     posts: [],
     post: {},
     count: null,
-    postsLoader: false
+    postsLoader: false,
+    loadMore: false,
+    postDeletedMessage: ""
 };
 
 const postReducer = (state = initialState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case LOAD_POSTS :
             return {
                 ...state,
                 posts: action.payload,
                 count: action.count,
-                postsLoader: false
+                postsLoader: false,
+                loadMore: false
 
             };
         case SINGLE_POST :
@@ -26,6 +36,21 @@ const postReducer = (state = initialState, action) => {
             return {
                 ...state,
                 postsLoader: true
+            };
+        case LOAD_MORE_LESS :
+            return {
+                ...state,
+                loadMore: true
+            };
+        case POST_DELETED_MESSAGE :
+            return {
+                ...state,
+                postDeletedMessage: "Your post was successfully delete"
+            };
+        case CLEAR_POSTS :
+            return {
+                ...state,
+                postDeletedMessage: ""
             };
         default:
             return state;

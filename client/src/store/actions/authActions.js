@@ -116,7 +116,7 @@ export const createProfile = profile => {
             const userProfile = {
                 status: profile.status,
                 website: profile.website,
-                location: profile.location,
+                location: profile.location.toLowerCase(),
                 bio: profile.bio,
                 skills,
                 facebook: "http://facebook.com/",

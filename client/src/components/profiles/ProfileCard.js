@@ -23,7 +23,7 @@ const ProfileCard = ({profile}) => {
 
     return (
         <>
-            <div className="profile">
+            <div className="profile animated fadeInUp">
                 <div className="profile-wrap">
                     <div className="profile-header">
                         <img src={profile.user.avatar} alt="Avatar"/>

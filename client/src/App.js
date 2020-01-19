@@ -9,11 +9,11 @@ import {loadProfiles} from "./store/actions/profileActions";
 import ProfileCard from "./components/profiles/ProfileCard";
 import PostCard from "./components/posts/PostCard";
 import {renderProfileSpinner} from "./utilities/config";
-import {Button} from "antd";
+import {Button, message} from "antd";
 import _ from "lodash";
 import "./App.scss";
 
-const App = ({loadUser, loadPosts, userData, loadProfiles, profiles, posts, likePost, unlikePost, deletePost}) => {
+const App = ({loadUser, loadPosts, userData, loadProfiles, profiles, posts, likePost, unlikePost, deletePost, postDeletedMessage}) => {
 
     useEffect(() => {
 
@@ -25,6 +25,12 @@ const App = ({loadUser, loadPosts, userData, loadProfiles, profiles, posts, like
             loadPosts(4);
         }
     }, []);
+
+    useEffect(() => {
+        if(postDeletedMessage) {
+            error(postDeletedMessage)
+        }
+    }, [postDeletedMessage]);
 
     const addLikeToPost = postId => {
         likePost(postId);
@@ -64,7 +70,7 @@ const App = ({loadUser, loadPosts, userData, loadProfiles, profiles, posts, like
 
     const renderProfilesLink = () => {
         return profiles.length !== 0 && (
-            <Button type="default">
+            <Button type="default" className="animated fadeInLeft">
                 <Link to="/developers">
                     Find Developers
                 </Link>
@@ -73,12 +79,16 @@ const App = ({loadUser, loadPosts, userData, loadProfiles, profiles, posts, like
 
     const renderPostsLink = () => {
       return posts.length !== 0 && (
-          <Button type="default">
+          <Button type="default" className="animated fadeInRight">
               <Link to="/posts">
                   Find Topics
               </Link>
           </Button>
       )
+    };
+
+    const error = msg => {
+        message.error(msg);
     };
 
     if (!userData.profile) {
@@ -119,7 +129,8 @@ const mapStateToProps = state => {
     return {
         userData: state.auth.user,
         profiles: state.profile.profiles,
-        posts: state.post.posts
+        posts: state.post.posts,
+        postDeletedMessage: state.post.postDeletedMessage
     }
 };
 

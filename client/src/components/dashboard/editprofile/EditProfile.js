@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {loadUser} from "../../../store/actions/authActions";
 import {editProfile} from "../../../store/actions/profileActions";
 import {Input, Select, Spin, Button, Icon, message} from "antd";
+import _ from "lodash";
 import {getUserPosition} from "../../../utilities/config";
 import "./EditProfile.scss";
 
@@ -120,7 +121,7 @@ const EditProfile = ({profile, editProfile, isLoading, successMessage, loadUser,
                             <label>Edit your location:</label>
                             <Input
                                 name="location"
-                                placeholder={profile.location ? profile.location : "Where are you from ?"}
+                                placeholder={profile.location ? _.startCase(_.toLower(profile.location)) : "Where are you from ?"}
                                 onChange={inputHandler}
                             />
                         </div>

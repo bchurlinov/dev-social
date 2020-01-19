@@ -1,3 +1,75 @@
+@import "../../styles/main.scss";
+
 #post-details {
   padding: 75px 0 75px;
+
+  h3 {
+    margin: 30px 0 30px;
+    font-weight: 300;
+  }
+}
+
+.toggle-comment-modal {
+  text-align: center;
+  padding: 35px 0 35px;
+}
+
+.post-details-wrap {
+  display: flex;
+  flex-flow: row wrap;
+  margin-bottom: 40px;
+
+  &__item {
+    &:first-of-type {
+      flex: 0 0 15%;
+      text-align: center;
+      position: relative;
+
+      @media(max-width: 767px) {
+        padding: 15px;
+        flex: 0 0 20%;
+      }
+
+      img {
+        width: 75px;
+        height: 75px;
+        margin-bottom: 5px;
+        @include border-radius(50%);
+
+        @media(max-width: 767px) {
+          width: 100%;
+          max-height: 50px;
+        }
+      }
+    }
+
+    &:last-of-type {
+      flex: 0 0 85%;
+
+      @media(max-width: 767px) {
+        flex: 0 0 80%;
+      }
+
+      h6 {
+        font-size: 15px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin-top: 5px;
+        margin-bottom: 0;
+      }
+
+      span {
+        text-align: left;
+        display: block;
+        font-size: 12px;
+        color: #a0a0a0;
+      }
+    }
+  }
+}
+
+.toggle-comment-modal {
+  margin: 20px 0 20px;
 }

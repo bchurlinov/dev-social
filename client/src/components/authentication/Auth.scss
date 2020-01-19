@@ -7,6 +7,10 @@
   &__item {
     flex: 0 0 50%;
 
+    @media(max-width: 991px) {
+      flex: 0 0 100%;
+    }
+
     &:first-of-type {
       background: linear-gradient(
                       rgba(64, 153, 255, 0.7),
@@ -15,12 +19,20 @@
       background-size: cover;
       height: 100vh;
 
+      @media(max-width: 991px) {
+        display: none;
+      }
+
       div {
         position: relative;
         top: 40%;
         left: 10%;
         max-width: 650px;
-        margin: 0 auto;
+
+        @media(max-width: 1199px) {
+          max-width: 400px;
+          padding: 25px;
+        }
 
         ul {
           li {
@@ -28,6 +40,10 @@
             font-size: 22px;
             font-weight: 300;
             padding-bottom: 35px;
+            @media (max-width: 1199px) {
+              font-size: 20px;
+              line-height: 1.8em;
+            }
 
             i {
               margin-right: 20px;
@@ -37,6 +53,12 @@
             }
           }
         }
+      }
+    }
+
+    &:last-of-type {
+      @media(max-width: 991px) {
+        padding: 65px 15px 65px;
       }
     }
   }
@@ -67,14 +89,23 @@
 
     &:nth-child(1) {
       flex: 0 0 40%;
+      @media(max-width: 1199px) {
+        flex: 0 0 100%;
+      }
     }
 
     &:nth-child(2) {
       flex: 0 0 40%;
+      @media(max-width: 1199px) {
+        flex: 0 0 100%;
+      }
     }
 
     &:nth-child(3) {
       flex: 0 0 20%;
+      @media(max-width: 1199px) {
+        flex: 0 0 100%;
+      }
 
       button {
         position: relative;
@@ -103,6 +134,10 @@
   margin: 150px auto;
   padding: 10px;
 
+  @media(max-width: 992px) {
+    margin: 75px auto;
+  }
+
   button {
     height: 39px;
     padding: 10px 30px;
@@ -128,6 +163,10 @@
     font-weight: 200;
     margin-bottom: 40px;
     font-size: 40px;
+
+    @media(max-width: 767px) {
+      font-size: 25px;
+    }
   }
 
 }

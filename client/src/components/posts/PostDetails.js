@@ -81,7 +81,6 @@ const PostDetails = ({match, getSinglePost, post, userData, likePost, unlikePost
     const renderPostComments = () => {
         if (!_.isEmpty(post)) {
             return _.map(post.comments, (comment, index) => {
-                console.log(comment);
                 return (
                     <div className="post-details-wrap" key={index}>
                         <div className="post-details-wrap__item">
@@ -110,7 +109,13 @@ const PostDetails = ({match, getSinglePost, post, userData, likePost, unlikePost
                         Comment on this post
                     </Button>
                 </div>
-                {renderPostComments()}
+                {post.comments && post.comments.length !== 0 ?
+                    renderPostComments()
+                    :
+                    <p style={{textAlign: "center"}}>
+                        This topic does not have any comments related to it. Be the first one to comment
+                    </p>
+                }
                 <div className="toggle-comment-modal">
                 </div>
             </div>

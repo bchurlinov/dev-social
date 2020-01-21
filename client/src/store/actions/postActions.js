@@ -15,7 +15,6 @@ export const loadPosts = (page = 1) => {
         try {
 
             const posts = await axios.get(`${url}/posts?page=${page}`);
-            console.log(posts);
 
             dispatch({
                 type: LOAD_POSTS,

@@ -26,7 +26,7 @@ const PostCard = ({posts, user, like, unlike, deletepost, single}) => {
     };
 
     return (
-        <div className="post animated fadeInUp">
+        <div className="post animated fadeIn">
             <div className="post-wrapper">
                 <div className="post-wrapper__user">
                     <img src={posts.avatar} alt="Avatar"/>
@@ -37,7 +37,7 @@ const PostCard = ({posts, user, like, unlike, deletepost, single}) => {
                     <p>
                         {posts.text}
                     </p>
-                    <span><b>Posted on:</b> {moment(posts.data).format("MMM-DDD-YYYY")}</span>
+                    <span><b>Posted on:</b> {moment(posts.date).format("MMM-DDD-YYYY")}</span>
                     <div className="comments-buttons">
                         {checkIfLiked(posts._id, posts)}
                         <Button type="primary" className="discussion-count" style={single ? {display: "none"} : {display: "inline-block"}}>

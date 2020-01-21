@@ -9,11 +9,13 @@ import {
     CLEAR_POSTS
 } from "../types";
 
-export const loadPosts = (limit = 4) => {
+export const loadPosts = (page = 1) => {
     return async (dispatch) => {
         dispatch({type: POSTS_LOADER});
         try {
-            const posts = await axios.get(`${url}/posts?limit=${limit}`);
+
+            const posts = await axios.get(`${url}/posts?page=${page}`);
+            console.log(posts);
 
             dispatch({
                 type: LOAD_POSTS,
@@ -38,7 +40,7 @@ export const addPost = post => {
         try {
 
             const posted = await axios.post(`${url}/posts`, post);
-            dispatch(loadPosts());
+            dispatch(loadPosts(1));
 
         } catch (err) {
             console.log(err);

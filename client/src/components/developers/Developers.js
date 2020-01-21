@@ -35,10 +35,10 @@ const Developers = ({profiles, loadProfiles}) => {
     };
 
     const inputHandler = event => {
-      setSelect({
-          ...select,
-          [event.target.name]: event.target.value
-      })
+        setSelect({
+            ...select,
+            [event.target.name]: event.target.value
+        })
     };
 
     const selectChange = (value, name) => {
@@ -108,7 +108,12 @@ const Developers = ({profiles, loadProfiles}) => {
                     </div>
                 </div>
                 <div className="developers-wrapper">
-                    {renderDevelopers()}
+                    {profiles.length !== 0 ?
+                        renderDevelopers()
+                        :
+                        <p>No developers found that match your search criteria</p>
+                    }
+
                 </div>
             </div>
         </div>

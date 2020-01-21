@@ -154,6 +154,7 @@
       &__item {
         border-bottom: 1px dashed #ededed;
         padding: 15px 0 15px;
+        text-transform: capitalize;
 
         &:last-of-type {
           border: none;
@@ -207,6 +208,7 @@
       &__item {
         border-bottom: 1px dashed #ededed;
         padding: 15px 0 15px;
+        text-transform: capitalize;
 
         &:last-of-type {
           border: none;

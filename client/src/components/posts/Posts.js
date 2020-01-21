@@ -1,28 +1,33 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from "react-redux";
-import {loadPosts, addPost, deletePost, unlikePost, likePost, loadMoreLessAction} from "../../store/actions/postActions";
+import {
+    loadPosts,
+    addPost,
+    deletePost,
+    unlikePost,
+    likePost,
+    loadMoreLessAction
+} from "../../store/actions/postActions";
 import PostCard from "./PostCard";
 import {renderProfileSpinner} from "../../utilities/config";
 import _ from "lodash";
-import {Input, Button, message} from "antd";
+import {Input, Button, message, Pagination} from "antd";
 import "./Posts.scss";
 
 const {TextArea} = Input;
 
-const Posts = ({posts, userData, addPost, likePost, unlikePost, deletePost, loadPosts, count, loadMoreLessAction, loadMore, postDeletedMessage}) => {
+const Posts = ({posts, userData, addPost, likePost, unlikePost, deletePost, loadPosts, postDeletedMessage, count}) => {
 
     const [input, setInput] = useState({
         text: ""
     });
 
-    const [limit, setLimit] = useState({amount: 4});
+    useEffect(() => {
+        loadPosts(1)
+    }, []);
 
     useEffect(() => {
-        loadPosts(limit.amount)
-    }, [limit]);
-
-    useEffect(() => {
-        if(postDeletedMessage) {
+        if (postDeletedMessage) {
             error(postDeletedMessage);
         }
     }, [postDeletedMessage]);
@@ -51,11 +56,11 @@ const Posts = ({posts, userData, addPost, likePost, unlikePost, deletePost, load
     };
 
     const addLikeToPost = postId => {
-        likePost(postId, limit.amount);
+        likePost(postId);
     };
 
     const unlikeAPost = postId => {
-        unlikePost(postId, limit.amount)
+        unlikePost(postId)
     };
 
     const deleteAPost = postId => {
@@ -75,7 +80,8 @@ const Posts = ({posts, userData, addPost, likePost, unlikePost, deletePost, load
     };
 
     const renderPosts = () => {
-        return posts && _.map(posts, (post, index) => {
+        const sortedPosts = posts && _.orderBy(posts, ['date'], ['desc', 'asc']);
+        return _.map(sortedPosts, (post, index) => {
             return (
                 <PostCard
                     key={index}
@@ -89,37 +95,15 @@ const Posts = ({posts, userData, addPost, likePost, unlikePost, deletePost, load
         });
     };
 
-    const loadMorePosts = () => {
-        setLimit({
-            ...limit,
-            amount: limit.amount + 4
-        });
-
-        loadMoreLessAction();
-    };
-
-    const loadLessPosts = () => {
-        setLimit({
-            ...limit,
-            amount: limit.amount - 4
-        });
-
-        loadMoreLessAction();
-    };
-
-    const checkPostsLength = () => {
-        return posts.length === count ? "load-more-button" : ""
-    };
-
-    const showLessCount = () => {
-        return posts.length !== count ? "show-less-button" : ""
+    const handlePaginate = event => {
+        loadPosts(event);
     };
 
     return (
         <div className="post-container animated fadeIn">
             <div className="container">
                 <div className="create-post">
-                    <h2>Create a post</h2>
+                    <h2>Create a topic</h2>
                     <div className="create-post__topic">
                         <div>
                             <img src={userData.avatar} alt="Avatar"/>
@@ -150,28 +134,13 @@ const Posts = ({posts, userData, addPost, likePost, unlikePost, deletePost, load
                             renderProfileSpinner()
                     }
                 </div>
-                <div className="text-center">
-                    <Button
-                        type="default"
-                        onClick={loadMorePosts}
-                        style={{marginTop: "20px"}}
-                        className={checkPostsLength()}
-                        loading={loadMore}
-                        disabled={loadMore}
-                    >
-                        Load More Posts
-                    </Button>
-
-                    <Button
-                        type="default"
-                        onClick={loadLessPosts}
-                        style={{marginTop: "20px"}}
-                        className={showLessCount()}
-                        loading={loadMore}
-                        disabled={loadMore}
-                    >
-                        Load Less Posts
-                    </Button>
+                <div className="posts-pagination">
+                    <Pagination
+                        defaultCurrent={1}
+                        pageSize={4}
+                        total={count && count}
+                        onChange={handlePaginate}
+                    />
                 </div>
             </div>
         </div>

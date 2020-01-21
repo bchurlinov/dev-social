@@ -1,7 +1,5 @@
 const Profile = require("../models/Profile");
-const Post = require("../models/Post");
 const _ = require("lodash");
-const moment = require("moment");
 
 // @route GET api/profile
 // @desc Get all profiles
@@ -14,7 +12,6 @@ exports.getAllProfiles = async (req, res) => {
         let requestParams = {...req.query};
         let disabled = ["status", "skills", "location"];
 
-
         _.map(disabled, (item) => {
             if (!req.query[item]) {
                 requestQuery = delete requestParams[item]
@@ -22,7 +19,7 @@ exports.getAllProfiles = async (req, res) => {
         });
 
         const popQuery = [{path: "user", select: "name avatar"}, {path: "topics"}];
-        requestQuery = await Profile.find(requestParams).populate(popQuery);
+        requestQuery = await Profile.find(requestParams).populate(popQuery).sort({date: -1});
 
         res.json(requestQuery);
 

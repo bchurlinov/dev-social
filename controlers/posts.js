@@ -1,6 +1,5 @@
 const User = require("../models/User");
 const Post = require("../models/Post");
-const Profile = require("../models/Profile");
 const _ = require("lodash");
 
 // @route GET api/posts/
@@ -11,17 +10,22 @@ exports.getPosts = async (req, res) => {
     try {
 
         let query;
-        const requestLimit = req.query.limit;
 
-        if (req.query.limit) {
+        if (req.query.page) {
+
+            const page = parseInt(req.query.page, 10) || 1; //for next page pass 1 here
+            const limit = parseInt(req.query.limit, 10) || 4;
+            const skip = (page -1) * limit;
+
             const countLength = await Post.find();
-            query = await Post.find().limit(JSON.parse(requestLimit));
-            res.status(200).json({data: query, count: countLength.length });
+            query = await Post.find().skip(skip).limit(limit).sort({date: -1});
+
+            res.status(200).json({data: query, page: page, count: countLength.length});
+
         } else {
-            query = await Post.find();
+            query = await Post.find().sort({date: -1});
             res.status(200).json(query);
         }
-
 
     } catch (err) {
         console.error(err);

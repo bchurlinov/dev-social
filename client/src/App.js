@@ -22,7 +22,7 @@ const App = ({loadUser, loadPosts, userData, loadProfiles, profiles, posts, like
             requestInterceptor(token);
             loadUser();
             loadProfiles();
-            loadPosts(4);
+            loadPosts(1);
         }
     }, []);
 
@@ -52,7 +52,7 @@ const App = ({loadUser, loadPosts, userData, loadProfiles, profiles, posts, like
 
     const renderPosts = () => {
         if (posts.length !== 0) {
-            return _.map(posts.slice(0, 4), (item, index) => {
+            return _.map(posts, (item, index) => {
                 return <PostCard
                     key={index}
                     posts={item}

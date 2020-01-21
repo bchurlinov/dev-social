@@ -25,6 +25,13 @@
   }
 }
 
+.posts-pagination {
+  text-align: center;
+  .ant-pagination {
+    margin-top: 50px;
+  }
+}
+
 .create-post {
   margin-bottom: 30px;
 

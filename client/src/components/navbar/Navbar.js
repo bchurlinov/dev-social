@@ -36,7 +36,7 @@ const Navbar = ({logOut, isAuthenticated}) => {
                             </li>
                             <li>
                                 <Link to="/posts">
-                                    Posts
+                                    Topics
                                 </Link></li>
                             <li> | </li>
                             <li>

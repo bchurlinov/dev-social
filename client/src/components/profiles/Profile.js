@@ -92,7 +92,7 @@ const Profile = ({match, history, user, getSingleProfile, deleteExperience, dele
         if (!current) {
             return moment(to).format("MMM DD YYYY")
         } else {
-            return "Currently studies here"
+            return "Current"
         }
     };
 

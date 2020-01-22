@@ -59,6 +59,16 @@
       padding: 50px 0 30px;
       text-align: center;
 
+      h2 {
+        text-transform: capitalize;
+      }
+
+      button {
+        span {
+          text-transform: capitalize;
+        }
+      }
+
       ul {
         li {
           display: inline-block;
@@ -80,6 +90,10 @@
     text-align: center;
     border-top: 1px solid #ededed;
 
+    h3 {
+      text-transform: capitalize;
+    }
+
     p {
       margin-bottom: 0;
     }
@@ -93,6 +107,7 @@
 
     p {
       margin-bottom: 0;
+      text-transform: capitalize;
 
       i {
         color: $blue-color;
@@ -120,6 +135,12 @@
     padding: 35px;
     text-align: center;
     border-top: 1px solid #ededed;
+
+    h3 {
+      span {
+        text-transform: capitalize;
+      }
+    }
 
     li {
       display: inline-block;

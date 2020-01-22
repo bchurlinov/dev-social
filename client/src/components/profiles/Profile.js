@@ -211,7 +211,7 @@ const Profile = ({match, history, user, getSingleProfile, deleteExperience, dele
                                 </div>
                                 <div>
                                     <Button type="primary" onClick={toggleModal}>
-                                        {item.user.name}'s latest topics
+                                        <span>{item.user.name}</span>' latest topics
                                     </Button>
                                 </div>
                             </div>
@@ -229,7 +229,7 @@ const Profile = ({match, history, user, getSingleProfile, deleteExperience, dele
                         </div>
 
                         <div className="single-profile-skills">
-                            <h3>{item.user.name}'s skills and areas of expertise:</h3>
+                            <h3><span>{item.user.name}</span>'s skills and areas of expertise:</h3>
                             <ul>
                                 {getSkills(item.skills)}
                             </ul>
@@ -264,6 +264,14 @@ const Profile = ({match, history, user, getSingleProfile, deleteExperience, dele
         })
     };
 
+    const checkIfTopics = () => {
+        if (!_.isEmpty(singleProfile)) {
+            return _.map(singleProfile, (item,index) => {
+                return item.topics.length !== 0 ? renderTopics() : <div key={index}><p>Nothing to show</p></div>
+            })
+        }
+    };
+
     return (
         <div id="single-profile" className="container">
             <Button onClick={history.goBack} type="primary" className="single-profile-back">
@@ -279,12 +287,12 @@ const Profile = ({match, history, user, getSingleProfile, deleteExperience, dele
             </div>
 
             <Modal
-                title={`${user.name}'s latest topics`}
+                title="Latest topics"
                 visible={modal.isVisible}
                 onCancel={toggleModal}
                 footer={null}
             >
-                {renderTopics()}
+                {checkIfTopics()}
 
             </Modal>
         </div>

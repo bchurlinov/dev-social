@@ -13,12 +13,12 @@ const Profile = require("../models/Profile");
 exports.register = async (req, res) => {
     try {
 
-        const {name, email, password} = req.body;
+        const { name, email, password } = req.body;
 
-        let user = await User.findOne({email: email});
+        let user = await User.findOne({ email: email });
 
         if (user) {
-            res.status(400).json({message: "User already exist"})
+            res.status(400).json({ message: "User already exist" })
         }
 
         const newUser = new User({
@@ -39,11 +39,11 @@ exports.register = async (req, res) => {
             expiresIn: 36000000
         }, (err, token) => {
             if (err) throw err;
-            res.json({token});
+            res.json({ token });
         });
 
     } catch (err) {
-        res.status(400).json({success: false, message: err});
+        res.status(400).json({ success: false, message: err });
     }
 };
 
@@ -55,18 +55,18 @@ exports.login = async (req, res) => {
 
     try {
 
-        const {email, password} = req.body;
+        const { email, password } = req.body;
 
-        let user = await User.findOne({email: email});
+        let user = await User.findOne({ email: email });
 
         if (!user) {
-            res.status(400).json({message: "Invalid Credentials"})
+            res.status(400).json({ message: "Invalid Credentials" })
         }
 
         const isPasswordMatch = await bcrypt.compare(password, user.password);
 
         if (!isPasswordMatch) {
-            res.status(400).json({message: "Your password / e-mail do not match our records"})
+            res.status(400).json({ message: "Your password / e-mail do not match our records" })
         } else {
 
             const payload = {
@@ -79,9 +79,28 @@ exports.login = async (req, res) => {
                 expiresIn: 360000
             }, (err, token) => {
                 if (err) throw err;
-                res.json({token});
+                res.json({ token });
             });
         }
+
+    } catch (err) {
+        res.status(500).send("Server Error")
+    }
+};
+
+
+// @route     POST api/auth/pushtoken
+// @desc      POST Push Token
+// @access    Public
+
+exports.pushToken = async (req, res) => {
+    try {
+
+        const token = req.body.token
+        const user = await User.findById(req.user.id);
+
+        const updateToken = await User.findOneAndUpdate({ _id: req.user.id }, { $set: { pushToken: token } }, { new: true });
+        res.status(200).send(updateToken);
 
     } catch (err) {
         res.status(500).send("Server Error")
@@ -113,12 +132,12 @@ exports.editUser = async (req, res) => {
         const user = await User.findById(req.user.id);
         if (user) {
             await User.findOneAndUpdate(
-                {_id: req.user.id},
-                {$set: {profile: true}},
-                {new: true}
+                { _id: req.user.id },
+                { $set: { profile: true } },
+                { new: true }
             );
 
-            res.status(200).json({message: "user updated"})
+            res.status(200).json({ message: "user updated" })
         }
 
     } catch (err) {
@@ -133,16 +152,16 @@ exports.editUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
     try {
 
-        const profile = await Profile.findOne({user: req.user.id});
-        const user = await User.findOne({_id: req.user.id});
+        const profile = await Profile.findOne({ user: req.user.id });
+        const user = await User.findOne({ _id: req.user.id });
 
         if (profile && user) {
-            await profile.deleteOne({user: req.user.id});
-            await user.deleteOne({_id: req.user.id});
+            await profile.deleteOne({ user: req.user.id });
+            await user.deleteOne({ _id: req.user.id });
 
-            res.status(200).json({message: "User deleted successfully"})
+            res.status(200).json({ message: "User deleted successfully" })
         } else {
-            res.status(404).json({message: "User not found"});
+            res.status(404).json({ message: "User not found" });
         }
 
 
